@@ -22,6 +22,72 @@ and loads the CSV tables from your data repo.
     // Set true if you want to hide the top nav inside the widget.
     hideNav: false,
   };
+
+  // NOTE: raw.githubusercontent.com serves JS/CSS as text/plain with nosniff.
+  // To keep this working inside a browser, we load assets via fetch() and
+  // inject them inline.
+
+  (function () {
+    var root = document.getElementById("tas-v2-root");
+
+    function showErr(msg) {
+      if (!root) return;
+      root.innerHTML =
+        "<div style=\"font-family:Inter,system-ui,sans-serif;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;\">" +
+        "<b>Unable to load dashboard assets.</b><div style=\"color:#475569;margin-top:8px;\">" +
+        String(msg || "") +
+        "</div></div>";
+    }
+
+    function fetchText(url) {
+      return fetch(url, { cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error(r.status + " " + url);
+        return r.text();
+      });
+    }
+
+    function loadCss(url) {
+      return fetchText(url).then(function (css) {
+        var style = document.createElement("style");
+        style.textContent = css;
+        document.head.appendChild(style);
+      });
+    }
+
+    function loadScript(url) {
+      return fetchText(url).then(function (js) {
+        var s = document.createElement("script");
+        s.text = js;
+        document.head.appendChild(s);
+      });
+    }
+
+    var base = String(window.TAS_BRAZE_V2_CONFIG.appBaseUrl || "").replace(/\/$/, "");
+    if (!base) {
+      showErr("Missing appBaseUrl in TAS_BRAZE_V2_CONFIG");
+      return;
+    }
+
+    loadCss(base + "/vendor/tabulator.min.css")
+      .then(function () {
+        return loadCss(base + "/app/app.css");
+      })
+      .then(function () {
+        return loadScript(base + "/vendor/plotly.min.js");
+      })
+      .then(function () {
+        return loadScript(base + "/vendor/papaparse.min.js");
+      })
+      .then(function () {
+        return loadScript(base + "/vendor/tabulator.min.js");
+      })
+      .then(function () {
+        return loadScript(base + "/app/app.js");
+      })
+      .catch(function (e) {
+        showErr(e && e.message ? e.message : String(e));
+      });
+  })();
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,10 +97,4 @@ and loads the CSV tables from your data repo.
   rel="stylesheet"
 />
 
-<link rel="stylesheet" href="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/vendor/tabulator.min.css" />
-<link rel="stylesheet" href="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/app/app.css" />
-
-<script src="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/vendor/plotly.min.js"></script>
-<script src="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/vendor/papaparse.min.js"></script>
-<script src="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/vendor/tabulator.min.js"></script>
-<script src="https://raw.githubusercontent.com/Johns329/braze-dashboard-v2/main/app/app.js"></script>
+<!-- CSS/JS assets are injected by the loader script above -->
