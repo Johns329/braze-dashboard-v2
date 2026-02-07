@@ -10,9 +10,21 @@ This is a Streamlit-free version of the dashboard meant to be embedded directly 
 
 ## Local preview
 
-Open `index.html` in a browser.
+Serve the folder and open `index.html` (fetch/XHR is often blocked on `file://` URLs).
+
+Example:
+
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/index.html`.
 
 ## Braze landing page stub
 
 Copy the contents of `stub.html` into your Braze landing page.
 Update the `dataBaseUrl` / `dataVersion` values as needed.
+
+Default data source:
+
+- `https://raw.githubusercontent.com/Johns329/braze-dashboard-cloud/main/data/tables`
