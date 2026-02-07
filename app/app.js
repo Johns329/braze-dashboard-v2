@@ -201,6 +201,32 @@
     if (el) el.textContent = String(text || "");
   }
 
+  function setRefreshCaption(text) {
+    var el = root.querySelector("[data-role='data-refresh-caption']");
+    if (el) el.textContent = String(text || "");
+  }
+
+  function fmtPacificDateTime(iso) {
+    var d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    try {
+      return new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Los_Angeles",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+        timeZoneName: "short",
+      }).format(d);
+    } catch (e) {
+      // If Intl/timeZone isn't supported, fall back to raw ISO.
+      return String(iso || "");
+    }
+  }
+
   function mountShell() {
     root.innerHTML =
       "" +
@@ -233,13 +259,14 @@
       "        <h4>Activity Period</h4>" +
       "        <select class='tas-select' data-role='period-select'></select>" +
       "        <div class='tas-muted' style='margin-top:8px; font-size:12px;' data-role='period-caption'></div>" +
-      "        <div class='tas-muted' style='margin-top:14px; font-size:12px;'>" +
-      "          Data source: <span style='font-family: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace;'>" +
-      esc(dataBaseUrl) +
-      "</span>" +
-      "        </div>" +
-      "      </aside>" +
-      "      <main class='tas-main'>" +
+       "        <div class='tas-muted' style='margin-top:14px; font-size:12px;'>" +
+       "          Data source: <span style='font-family: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace;'>" +
+       esc(dataBaseUrl) +
+       "</span>" +
+       "        </div>" +
+       "        <div class='tas-muted' style='margin-top:8px; font-size:12px;' data-role='data-refresh-caption'></div>" +
+       "      </aside>" +
+       "      <main class='tas-main'>" +
       "        <div class='tas-header'>" +
       "          <div>" +
       "            <div class='tas-badge'>Governance</div>" +
@@ -959,6 +986,46 @@
     });
   }
 
+  function loadRefreshMeta() {
+    var base = dataBaseUrl.replace(/\/$/, "");
+    var url = base + "/refresh_meta.json";
+    // Bypass intermediate caches; tables still use dataVersion cache-busting.
+    var bust = url + (url.indexOf("?") >= 0 ? "&" : "?") + "t=" + String(Date.now());
+
+    return fetchText(bust)
+      .then(function (text) {
+        var meta = {};
+        try {
+          meta = JSON.parse(text || "{}");
+        } catch (e) {
+          meta = {};
+        }
+
+        var iso =
+          (meta && (meta.refreshed_at_utc || meta.refreshedAtUtc || meta.refreshed_at || meta.refreshedAt)) ||
+          "";
+
+        if (!iso) {
+          setRefreshCaption("");
+          return;
+        }
+
+        var pac = fmtPacificDateTime(iso);
+        if (pac) {
+          setRefreshCaption("Last refresh (Pacific): " + pac);
+        } else {
+          setRefreshCaption("Last refresh (UTC): " + String(iso));
+        }
+
+        // Use the refresh timestamp as a stable cache buster for the CSV tables.
+        dataVersion = String(iso);
+      })
+      .catch(function () {
+        // Optional file; don't block dashboard if missing.
+        setRefreshCaption("");
+      });
+  }
+
   function buildBlockIndex() {
     return new Promise(function (resolve, reject) {
       var url = qs(dataBaseUrl.replace(/\/$/, "") + "/content_blocks.csv");
@@ -1029,12 +1096,15 @@
 
     setLoading("Loading tables...");
 
-    Promise.all([
-      loadSmallCsv("catalog_schema.csv"),
-      loadSmallCsv("asset_inventory.csv"),
-      loadSmallCsv("field_references.csv"),
-      loadSmallCsv("dependencies.csv"),
-    ])
+    loadRefreshMeta()
+      .then(function () {
+        return Promise.all([
+          loadSmallCsv("catalog_schema.csv"),
+          loadSmallCsv("asset_inventory.csv"),
+          loadSmallCsv("field_references.csv"),
+          loadSmallCsv("dependencies.csv"),
+        ]);
+      })
       .then(function (res) {
         data.catalog = res[0].map(function (r) {
           return {
