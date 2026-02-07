@@ -1,0 +1,322 @@
+/* Scoped styles so the widget is safe to embed */
+
+#tas-v2-root {
+  --primary: #ff6a00;
+  --primary-hover: #e55f00;
+  --dark-slate: #0f172a;
+  --slate-800: #1e293b;
+  --slate-600: #475569;
+  --slate-400: #94a3b8;
+  --slate-200: #e2e8f0;
+  --surface: #ffffff;
+  --background: #f8fafc;
+  --danger: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-full: 9999px;
+  --max-w: 1400px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06),
+    0 2px 4px -2px rgba(0, 0, 0, 0.04);
+
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--dark-slate);
+}
+
+#tas-v2-root * {
+  box-sizing: border-box;
+}
+
+#tas-v2-root a {
+  color: inherit;
+}
+
+.tas-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--slate-200);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tas-nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tas-nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.tas-nav-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff6a00, #ff9e42);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 900;
+}
+
+.tas-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+}
+
+.tas-shell {
+  background: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tas-shell-inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 780px;
+}
+
+.tas-sidebar {
+  border-right: 1px solid var(--slate-200);
+  background: var(--surface);
+  padding: 18px;
+}
+
+.tas-sidebar h4 {
+  margin: 14px 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+}
+
+.tas-navbtns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tas-navbtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--slate-200);
+  background: var(--background);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 700;
+  color: var(--slate-800);
+  cursor: pointer;
+}
+
+.tas-navbtn[data-active="true"] {
+  background: rgba(255, 106, 0, 0.12);
+  border-color: rgba(255, 106, 0, 0.25);
+}
+
+.tas-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--slate-200);
+  background: #fff;
+  color: var(--slate-800);
+  font-weight: 600;
+}
+
+.tas-main {
+  padding: 22px 22px 28px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 55%, #f8fafc 100%);
+}
+
+.tas-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255, 106, 0, 0.1);
+  color: var(--primary);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tas-title {
+  margin: 10px 0 4px;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.tas-subtitle {
+  margin: 0;
+  color: var(--slate-600);
+}
+
+.tas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.tas-card {
+  background: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.tas-kpi-label {
+  margin: 0 0 6px;
+  color: var(--slate-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tas-kpi-value {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.tas-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.tas-row-2 {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 12px;
+}
+
+.tas-section-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.tas-muted {
+  color: var(--slate-600);
+}
+
+.tas-alert {
+  border: 1px solid var(--slate-200);
+  border-left-width: 4px;
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.tas-alert[data-kind="critical"] { border-left-color: var(--danger); }
+.tas-alert[data-kind="warning"] { border-left-color: var(--warning); }
+.tas-alert[data-kind="success"] { border-left-color: var(--success); }
+.tas-alert[data-kind="info"] { border-left-color: var(--primary); }
+
+.tas-alert h5 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.tas-alert p {
+  margin: 0;
+  color: var(--slate-600);
+}
+
+.tas-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--slate-200);
+  background: var(--background);
+  color: var(--slate-600);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.tas-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--slate-200);
+  border-top-color: var(--primary);
+  animation: tas-spin 1s linear infinite;
+}
+
+@keyframes tas-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Tabulator tweaks */
+#tas-v2-root .tabulator {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+#tas-v2-root .tabulator .tabulator-header {
+  background: var(--background);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+#tas-v2-root .tabulator .tabulator-header .tabulator-col {
+  background: var(--background);
+}
+
+#tas-v2-root .tabulator-row {
+  border-bottom: 1px solid var(--slate-200);
+}
+
+@media (max-width: 980px) {
+  .tas-shell-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .tas-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .tas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tas-row-2 {
+    grid-template-columns: 1fr;
+  }
+}

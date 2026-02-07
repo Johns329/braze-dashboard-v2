@@ -1,0 +1,41 @@
+<!--
+Paste this stub into a Braze landing page.
+
+It loads vendor libraries + the app from GitHub (raw.githubusercontent.com)
+and loads the CSV tables from your data repo.
+-->
+
+<div id="tas-v2-root"></div>
+
+<script>
+  // ---- Configuration you can change in Braze ----
+  window.TAS_BRAZE_V2_CONFIG = {
+    // Where the app assets live (this repo).
+    // After you push this repo, replace <USER> and <REPO>.
+    appBaseUrl: "https://raw.githubusercontent.com/<USER>/<REPO>/main",
+
+    // Where the CSV tables live (your existing data repo).
+    dataBaseUrl: "https://raw.githubusercontent.com/Johns329/braze-dashboard-cloud/main/data/tables",
+
+    // Cache buster; bump this after you push new CSV tables.
+    dataVersion: "2026-02-07",
+
+    // Set true if you want to hide the top nav inside the widget.
+    hideNav: false,
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="https://raw.githubusercontent.com/<USER>/<REPO>/main/vendor/tabulator.min.css" />
+<link rel="stylesheet" href="https://raw.githubusercontent.com/<USER>/<REPO>/main/app/app.css" />
+
+<script src="https://raw.githubusercontent.com/<USER>/<REPO>/main/vendor/plotly.min.js"></script>
+<script src="https://raw.githubusercontent.com/<USER>/<REPO>/main/vendor/papaparse.min.js"></script>
+<script src="https://raw.githubusercontent.com/<USER>/<REPO>/main/vendor/tabulator.min.js"></script>
+<script src="https://raw.githubusercontent.com/<USER>/<REPO>/main/app/app.js"></script>
