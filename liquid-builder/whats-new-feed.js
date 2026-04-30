@@ -4,10 +4,32 @@
  * Release feed content for Toast Audience Studio - Targeting Studio.
  */
 window.WHATS_NEW_FEED = {
-  last_updated: "2026-01-27",
-  release_notes_url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE",
+  last_updated: "2026-04-30",
+  release_notes_url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link",
   max_items_default: 5,
   items: [
+    {
+      id: "v1.0.0-advanced-logic-ast",
+      date: "2026-04-30",
+      version: "v1.0.0",
+      type: "New",
+      title: "Advanced Logic Engine: Full Support for Parentheses",
+      summary:
+        "The Targeting Studio now features a true logic parser, safely converting grouped conditions (using parentheses) into valid Braze Liquid.",
+      details: [
+        "Replaced fragile find-and-replace string operations with an AST-based logic compiler.",
+        "Parentheses like `1 and (2 or 3)` evaluate exactly as intended without breaking Liquid outputs.",
+        "Greatly simplifies multi-regional targeting, VIP cross-selling, and complex exclusions."
+      ],
+      impact: "All users",
+      action_required: false,
+      links: [
+        {
+          label: "Full Release Notes",
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
+        }
+      ]
+    },
     {
       id: "v0.9.4-contact-type-picklist",
       date: "2026-01-27",
@@ -30,7 +52,7 @@ window.WHATS_NEW_FEED = {
         },
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -52,7 +74,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -73,7 +95,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -94,7 +116,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -120,7 +142,7 @@ window.WHATS_NEW_FEED = {
         },
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     }
