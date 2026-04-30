@@ -5,7 +5,7 @@
  */
 window.WHATS_NEW_FEED = {
   last_updated: "2026-04-30",
-  release_notes_url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE",
+  release_notes_url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link",
   max_items_default: 5,
   items: [
     {
@@ -26,7 +26,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -52,7 +52,7 @@ window.WHATS_NEW_FEED = {
         },
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -74,7 +74,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -95,7 +95,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -116,7 +116,7 @@ window.WHATS_NEW_FEED = {
       links: [
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     },
@@ -142,7 +142,7 @@ window.WHATS_NEW_FEED = {
         },
         {
           label: "Full Release Notes",
-          url: "PASTE_GOOGLE_DOC_RELEASE_NOTES_URL_HERE"
+          url: "https://docs.google.com/document/d/1BN1gHuHyEK3bIkQRiBQp1Sc_sXXHHjbRKq11Y5RuWhc/edit?usp=drive_link"
         }
       ]
     }
