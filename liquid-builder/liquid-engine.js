@@ -301,6 +301,7 @@
     associationFields.forEach(field => {
       output += `\n${liquidTag(`assign assoc_${field} = assoc.${field}`, `${indent}        `, trim)}`;
     });
+    output += `\n${liquidTag('break', `${indent}        `, trim)}`;
     output += `\n${liquidTag('endif', `${indent}    `, trim)}`;
     output += `\n${liquidTag('endfor', indent, trim)}\n`;
 
