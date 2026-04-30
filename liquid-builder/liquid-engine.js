@@ -546,6 +546,9 @@ ${setupVars}
 {% comment %} First pass: Check if user has any matching locations {% endcomment %}
 {% for location in user_locations %}
     {% assign location_guid = location.location_guid %}
+    {% if location_guid == blank %}
+        {% continue %}
+    {% endif %}
     {% catalog_items ${catalogName} {{location_guid}} %}
     {% assign catalog_item = items[0] %}
     {% if catalog_item != blank %}${runtimeBlocks}
@@ -666,6 +669,9 @@ ${setupVars}
 
             {%- for location in user_locations -%}
               {%- assign location_guid = location.location_guid -%}
+              {%- if location_guid == blank -%}
+                {%- continue -%}
+              {%- endif -%}
               {%- catalog_items ${catalogName} {{location_guid}} -%}
               {%- assign catalog_item = items[0] -%}
               {%- if catalog_item != blank -%}${runtimeBlocks}
