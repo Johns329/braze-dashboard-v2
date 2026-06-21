@@ -15,6 +15,10 @@ window.CATALOG_FIELDS = {
   // ========== ASSOCIATION FIELDS (from location_association_v2) ==========
   'is_finance_contact': { type: 'boolean', label: 'Is Finance Contact', source: 'association' },
   'is_service_contact': { type: 'boolean', label: 'Is Service Contact', source: 'association' },
+  'has_account_admin_permission': { type: 'boolean', label: 'Has Account Admin Permission', source: 'association' },
+  'has_sales_reporting_permission': { type: 'boolean', label: 'Has Sales Reporting Permission', source: 'association' },
+  'has_labor_reporting_permission': { type: 'boolean', label: 'Has Labor Reporting Permission', source: 'association' },
+
 
   // ========== CATALOG FIELDS (from Primary_Locations_Catalog) ==========
   'has_ever_had_toast_capital': { type: 'boolean', label: 'Has Ever Had Toast Capital' },
