@@ -133,6 +133,7 @@ window.CATALOG_FIELDS = {
   'has_xtrachef_ap': { type: 'boolean', label: 'Has XtraChef AP' },
   'has_xtrachef_inventory': { type: 'boolean', label: 'Has XtraChef Inventory' },
   'has_xtrachef_recipe': { type: 'boolean', label: 'Has XtraChef Recipe' },
+  'instant_deposit_transactions_last_7_days': { type: 'number', label: 'Instant Deposit Transactions Last 7 Days' },
   'in_toast_now_pilot': { type: 'boolean', label: 'In Toast Now Pilot' },
   'is_actively_surcharging': { type: 'boolean', label: 'Is Actively Surcharging' },
   'is_house_tip_share_enabled': { type: 'boolean', label: 'Is House Tip Share Enabled' },
