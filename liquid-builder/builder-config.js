@@ -6,6 +6,7 @@
 window.BUILDER_CONFIG = {
   defaultCondition: { id: 1, field: 'account_segment', operator: 'equals', value: 'SMB' },
   locationsAttr: 'locations_v2',
+  secondaryLocationsAttr: 'secondary_profile_locations',
   associationAttr: 'location_association_v2',
   catalogName: 'Primary_Locations_Catalog',
   operatorsByType: {

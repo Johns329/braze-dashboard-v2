@@ -391,6 +391,71 @@
       margin-top: 24px;
     }
 
+    .targeting-options {
+      display: flex;
+      align-items: center;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .toggle-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-control input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .toggle-track {
+      width: 42px;
+      height: 24px;
+      padding: 3px;
+      border: 1px solid var(--slate-400);
+      border-radius: var(--radius-full);
+      background: var(--slate-200);
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle-track::after {
+      content: "";
+      display: block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.25);
+      transition: transform 0.2s;
+    }
+
+    .toggle-control input:checked + .toggle-track {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .toggle-control input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    .toggle-control input:focus-visible + .toggle-track {
+      outline: 3px solid rgba(255, 106, 0, 0.2);
+      outline-offset: 2px;
+    }
+
+    .toggle-label {
+      color: var(--slate-800);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     #advancedLogicInput {
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
@@ -824,6 +889,14 @@
           <button class="btn btn-primary" onclick="addCondition()">+ Add Condition</button>
         </div>
 
+        <div class="targeting-options">
+          <label class="toggle-control" for="secondaryProfileTargeting">
+            <input type="checkbox" id="secondaryProfileTargeting" />
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Enable secondary profile targeting</span>
+          </label>
+        </div>
+
         <div id="conditionsContainer"></div>
 
         <div class="config-section" id="advancedLogicSection" style="display:none;">
@@ -962,10 +1035,10 @@
     <span style="font-size:16px;">✓</span> Copied to clipboard!
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@9fa7566/liquid-builder/whats-new-feed.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@9fa7566/liquid-builder/builder-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@2d253a2/liquid-builder/catalog-fields.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@9fa7566/liquid-builder/liquid-engine.js"></script>
+  <script src="liquid-builder/whats-new-feed.js"></script>
+  <script src="liquid-builder/builder-config.js"></script>
+  <script src="liquid-builder/catalog-fields.js"></script>
+  <script src="liquid-builder/liquid-engine.js"></script>
   <script>
     // --------------------------
     // State
@@ -978,6 +1051,7 @@
 
     const {
       locationsAttr,
+      secondaryLocationsAttr = 'secondary_profile_locations',
       associationAttr,
       catalogName,
       operatorsByType
@@ -1122,6 +1196,10 @@
       return input ? input.value.trim() : '';
     }
 
+    function isSecondaryProfileTargetingEnabled() {
+      return document.getElementById('secondaryProfileTargeting')?.checked === true;
+    }
+
     function isValidLogic() {
       const expr = getLogicExpression();
       if (!expr || conditions.length < 3) return true;
@@ -1149,6 +1227,8 @@
         catalogFields,
         operatorsByType,
         locationsAttr,
+        secondaryLocationsAttr,
+        enableSecondaryProfileTargeting: isSecondaryProfileTargetingEnabled(),
         associationAttr,
         catalogName
       };
@@ -1485,6 +1565,7 @@ This attribute contains the user's relationship to each location.
       initTabs();
       renderWhatsNew();
       document.getElementById('advancedLogicInput')?.addEventListener('input', () => { validateLogicInput(); updatePreview(); });
+      document.getElementById('secondaryProfileTargeting')?.addEventListener('change', updateGeneratedCode);
 
       document.addEventListener('keydown', e => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'v') {

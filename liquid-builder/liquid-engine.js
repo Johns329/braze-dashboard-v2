@@ -450,16 +450,41 @@
   }
 
   function buildGuards(options, mode, indent = '', trim = false) {
-    const { locationsAttr, associationAttr, conditions, catalogFields } = options;
+    const {
+      locationsAttr,
+      secondaryLocationsAttr = 'secondary_profile_locations',
+      enableSecondaryProfileTargeting,
+      associationAttr,
+      conditions,
+      catalogFields
+    } = options;
     const useAssociation = hasAssociationConditions(conditions, catalogFields);
 
     let output = '';
 
     if (mode === 'qa') {
-      output += `\n${indent}{%- assign user_locations = custom_attribute.\${${locationsAttr}} -%}`;
-      output += `\n${indent}{%- if user_locations == blank -%}`;
-      output += `\n${indent}  {%- abort_message("${locationsAttr} is blank") -%}`;
-      output += `\n${indent}{%- endif -%}`;
+      if (enableSecondaryProfileTargeting) {
+        output += `\n${indent}{%- comment -%}`;
+        output += `\n${indent}  Select the location source:`;
+        output += `\n${indent}  1. Use ${locationsAttr} when populated.`;
+        output += `\n${indent}  2. Otherwise, use ${secondaryLocationsAttr}.`;
+        output += `\n${indent}  3. Abort when both are blank.`;
+        output += `\n${indent}{%- endcomment -%}`;
+        output += `\n${indent}{%- assign primary_locations = custom_attribute.\${${locationsAttr}} -%}`;
+        output += `\n${indent}{%- assign secondary_locations = custom_attribute.\${${secondaryLocationsAttr}} -%}`;
+        output += `\n${indent}{%- if primary_locations != blank -%}`;
+        output += `\n${indent}  {%- assign user_locations = primary_locations -%}`;
+        output += `\n${indent}{%- elsif secondary_locations != blank -%}`;
+        output += `\n${indent}  {%- assign user_locations = secondary_locations -%}`;
+        output += `\n${indent}{%- else -%}`;
+        output += `\n${indent}  {%- abort_message("Both ${locationsAttr} and ${secondaryLocationsAttr} are blank") -%}`;
+        output += `\n${indent}{%- endif -%}`;
+      } else {
+        output += `\n${indent}{%- assign user_locations = custom_attribute.\${${locationsAttr}} -%}`;
+        output += `\n${indent}{%- if user_locations == blank -%}`;
+        output += `\n${indent}  {%- abort_message("${locationsAttr} is blank") -%}`;
+        output += `\n${indent}{%- endif -%}`;
+      }
 
       if (useAssociation) {
         output += `\n${indent}{%- assign ${associationAttr} = custom_attribute.\${${associationAttr}} -%}`;
@@ -468,10 +493,28 @@
         output += `\n${indent}{%- endif -%}`;
       }
     } else {
-      output += `{% assign user_locations = custom_attribute.\${${locationsAttr}} %}\n`;
-      output += `{% if user_locations == blank %}\n`;
-      output += `    {% abort_message("${locationsAttr} is blank") %}\n`;
-      output += `{% endif %}\n`;
+      if (enableSecondaryProfileTargeting) {
+        output += `{% comment %}\n`;
+        output += `  Select the location source:\n`;
+        output += `  1. Use ${locationsAttr} when populated.\n`;
+        output += `  2. Otherwise, use ${secondaryLocationsAttr}.\n`;
+        output += `  3. Abort when both are blank.\n`;
+        output += `{% endcomment %}\n\n`;
+        output += `{% assign primary_locations = custom_attribute.\${${locationsAttr}} %}\n`;
+        output += `{% assign secondary_locations = custom_attribute.\${${secondaryLocationsAttr}} %}\n\n`;
+        output += `{% if primary_locations != blank %}\n`;
+        output += `    {% assign user_locations = primary_locations %}\n`;
+        output += `{% elsif secondary_locations != blank %}\n`;
+        output += `    {% assign user_locations = secondary_locations %}\n`;
+        output += `{% else %}\n`;
+        output += `    {% abort_message("Both ${locationsAttr} and ${secondaryLocationsAttr} are blank") %}\n`;
+        output += `{% endif %}\n`;
+      } else {
+        output += `{% assign user_locations = custom_attribute.\${${locationsAttr}} %}\n`;
+        output += `{% if user_locations == blank %}\n`;
+        output += `    {% abort_message("${locationsAttr} is blank") %}\n`;
+        output += `{% endif %}\n`;
+      }
 
       if (useAssociation) {
         output += `\n{% assign ${associationAttr} = custom_attribute.\${${associationAttr}} %}\n`;
