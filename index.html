@@ -1025,6 +1025,34 @@
           <a href="#" id="releaseNotesLink" target="_blank" style="color:var(--primary); text-decoration:none; display:none;">View Full Release Notes →</a>
         </div>
       </div>
+      <div class="update-card" data-featured-release-date="2026-07-17">
+        <div class="update-header">
+          <div class="update-title-row">
+            <span class="badge-type badge-new">New</span>
+            <span class="update-title">Enable Secondary Profile Targeting</span>
+            <span class="update-version">v1.1.0</span>
+          </div>
+          <span class="update-date">2026-07-17</span>
+        </div>
+
+        <div class="update-body">
+          <div class="update-summary">
+            The Query Builder now includes an optional secondary profile targeting mode for users whose
+            primary location attribute is not populated.
+          </div>
+          <ul class="update-details">
+            <li>Adds an "Enable secondary profile targeting" toggle to the Query Builder tab.</li>
+            <li>When enabled, Audience Logic, Context Variable, In-Canvas Webhook, and QA Webhook Liquid use <code>locations_v2</code> first, then fall back to <code>secondary_profile_locations</code>.</li>
+            <li>Generated Liquid now aborts only when both location attributes are blank, preserving the original <code>locations_v2</code>-only behavior when the toggle is off.</li>
+          </ul>
+        </div>
+
+        <div class="update-footer">
+          <div class="impact-badge">
+            <span>Impact:</span> <strong>Campaign Ops, Lifecycle, MOPs</strong>
+          </div>
+        </div>
+      </div>
       <div id="whatsNewContainer">
         <!-- Updates injected here -->
       </div>
@@ -1035,10 +1063,10 @@
     <span style="font-size:16px;">✓</span> Copied to clipboard!
   </div>
 
-  <script src="liquid-builder/whats-new-feed.js"></script>
-  <script src="liquid-builder/builder-config.js"></script>
-  <script src="liquid-builder/catalog-fields.js"></script>
-  <script src="liquid-builder/liquid-engine.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@8855a180823df893aa3cb3497e3f1d7aa27215fe/liquid-builder/whats-new-feed.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@8855a180823df893aa3cb3497e3f1d7aa27215fe/liquid-builder/builder-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@8855a180823df893aa3cb3497e3f1d7aa27215fe/liquid-builder/catalog-fields.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Johns329/braze-dashboard-v2@8855a180823df893aa3cb3497e3f1d7aa27215fe/liquid-builder/liquid-engine.js"></script>
   <script>
     // --------------------------
     // State
@@ -1501,8 +1529,13 @@ This attribute contains the user's relationship to each location.
       if(!container) return;
 
       // Update meta
-      if(WHATS_NEW_FEED.last_updated) {
-        dateEl.textContent = `Last updated: ${WHATS_NEW_FEED.last_updated}`;
+      const featuredReleaseDate = document.querySelector('[data-featured-release-date]')?.dataset.featuredReleaseDate;
+      const latestReleaseDate = [WHATS_NEW_FEED.last_updated, featuredReleaseDate]
+        .filter(Boolean)
+        .sort((a, b) => new Date(b) - new Date(a))[0];
+
+      if(latestReleaseDate) {
+        dateEl.textContent = `Last updated: ${latestReleaseDate}`;
       }
       if(WHATS_NEW_FEED.release_notes_url && WHATS_NEW_FEED.release_notes_url !== "#") {
         linkEl.href = WHATS_NEW_FEED.release_notes_url;
